@@ -3,7 +3,6 @@ const cardTemplate = document.querySelector("#card-template").content;
 // @todo: DOM узлы
 const content = document.querySelector(".content");
 const places = content.querySelector(".places");
-const resetButton = cardTemplate.querySelector(".card__delete-button");
 const placesList = content.querySelector(".places__list");
 
 // @todo: Функция создания карточки
