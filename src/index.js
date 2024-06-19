@@ -35,7 +35,6 @@ const linkCard = formElementNewPlace.querySelector(".popup__input_type_url");
 // Открытие модальных окон по клику
 profileEditButton.addEventListener("click", () => {
   openModal(popupTypeEdit);
-  saveProfileInputs();
 });
 
 profileAddButton.addEventListener("click", () => {
@@ -76,12 +75,6 @@ function profileFormSubmit(evt) {
   closeModal(popupTypeEdit);
 }
 
-// Функция добавления стартовых значений в инпут поля
-function saveProfileInputs() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileDescription.textContent;
-}
-
 formElementProfile.addEventListener("submit", profileFormSubmit);
 
 //Добавление карточки
@@ -113,3 +106,5 @@ function renderCards() {
   }
 }
 renderCards();
+
+// Валидация форм
