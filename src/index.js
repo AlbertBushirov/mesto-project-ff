@@ -7,6 +7,7 @@ import {
   likeCard,
 } from "./components/card";
 import { openModal, closeModal } from "./components/modal";
+import { enableValidation, clearValidation } from "./components/validation.js";
 
 const popupList = document.querySelectorAll(".popup");
 const closeButtons = document.querySelectorAll(".popup__close");
@@ -35,10 +36,12 @@ const linkCard = formElementNewPlace.querySelector(".popup__input_type_url");
 // Открытие модальных окон по клику
 profileEditButton.addEventListener("click", () => {
   openModal(popupTypeEdit);
+  clearValidation(formElementProfile, validationConfig);
 });
 
 profileAddButton.addEventListener("click", () => {
   openModal(popupNewCard);
+  clearValidation(formElementNewPlace, validationConfig);
 });
 
 //Закрытие модальных окон крестиком
@@ -108,3 +111,13 @@ function renderCards() {
 renderCards();
 
 // Валидация форм
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "button_inactive",
+  inputErrorClass: ".form__input-error_active",
+  errorClass: ".form__input_type_error",
+};
+
+enableValidation(validationConfig);
