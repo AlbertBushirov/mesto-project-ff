@@ -1,8 +1,44 @@
+import { deleteMyCard, likeCards, deleteLikeCard } from "./api.js";
+
+//Удалить лайк
+function deleteLike(cardData, LikeHandler, counterLikes, countLikes, evt) {
+  deleteLikeCard(cardData._id)
+    .then((res) => {
+      counterLikes.textContent = res.likes.length;
+      dataCard.likes = res.likes;
+      LikeHandler(evt);
+      countLikes.textContent = calculateLikes(res);
+    })
+    .catch(handleError);
+}
+
+//Добавить лайк
+function addLike(cardData, LikeHandler, counterLikes, countLikes, evt) {
+  likeCards(cardData._id)
+    .then((res) => {
+      counterLikes.textContent = res.likes.length;
+      dataCard.likes = res.likes;
+      LikeHandler(evt);
+      countLikes.textContent = calculateLikes(res);
+    })
+    .catch(handleError);
+}
+
+function cardLike(
+  dataCard,
+  userId,
+  LikeHandler,
+  counterLikes,
+  countLikes,
+  evt
+) {
+  dataCard.likes.some((item) => item._id === userId)
+    ? deleteLike(cardData, LikeHandler, counterLikes, countLikes, evt)
+    : addLike(cardData, LikeHandler, counterLikes, countLikes, evt);
+}
+
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
-// @todo: DOM узлы
-const content = document.querySelector(".content");
-export const placesList = content.querySelector(".places__list");
 
 // @todo: Функция создания карточки
 export function createCard(cardData, onDelete, onLike, openImage) {
@@ -29,11 +65,14 @@ export function createCard(cardData, onDelete, onLike, openImage) {
 }
 
 // @todo: Функция удаления карточки
-export function deleteCard(resetButton) {
-  resetButton.remove();
+export function deleteCard(cardElementId, cardElement) {
+  deleteMyCard(cardElementId).then(() => {
+    cardElement.remove();
+  });
 }
 
 //Лайк карточки
-export function likeCard(cardLike) {
-  cardLike.classList.toggle("card__like-button_is-active");
+export function likeCard(element) {
+  cardLike(dataCard, userId, LikeHandler, counterLikes, countLikes, evt);
+  element.classList.toggle("card__like-button_is-active");
 }

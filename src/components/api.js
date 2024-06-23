@@ -36,6 +36,7 @@ export const addCard = ({ name, link }) => {
   }).then(handleResponse);
 };
 
+//Лайк карты
 export const likeCards = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
@@ -43,6 +44,7 @@ export const likeCards = (cardId) => {
   }).then(handleResponse);
 };
 
+//Удаление лайка
 export const deleteLikeCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
@@ -50,6 +52,7 @@ export const deleteLikeCard = (cardId) => {
   }).then(handleResponse);
 };
 
+//Удаление карты
 export const deleteMyCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
@@ -68,6 +71,7 @@ export const patchUserInfo = ({ name, about }) => {
   }).then(handleResponse);
 };
 
+//Замена аватара
 export const сhangeAvatar = (avatar) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
