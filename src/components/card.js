@@ -73,6 +73,6 @@ export function deleteCard(cardElementId, cardElement) {
 
 //Лайк карточки
 export function likeCard(element) {
-  cardLike(dataCard, userId, LikeHandler, counterLikes, countLikes, evt);
+  cardLike(userId, LikeHandler, counterLikes, countLikes, evt);
   element.classList.toggle("card__like-button_is-active");
 }

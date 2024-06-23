@@ -91,7 +91,7 @@ function profileFormSubmit(evt) {
     })
     .finally(() => {
       renderLoading(false);
-      closeModal(popupEditProfile);
+      closeModal(popupTypeEdit);
     });
 }
 
@@ -124,7 +124,7 @@ function addNewCard(evt) {
     })
     .finally(() => {
       renderLoading(false);
-      closeModal(popupAddCard);
+      closeModal(popupNewCard);
     });
 }
 
@@ -132,7 +132,7 @@ formElementNewPlace.addEventListener("submit", addNewCard);
 
 //Вывести карточки на страницу
 function renderCards() {
-  Promise.all([getUserInfo(), getInitialCards()]).then(([userData]) => {
+  Promise.all([getUserInfo(), newInitialCards()]).then(([userData]) => {
     const userId = userData._id;
     for (let i = 0; i < newInitialCards.length; i++) {
       const result = createCard(
