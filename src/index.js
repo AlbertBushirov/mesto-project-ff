@@ -46,6 +46,7 @@ const avatarInput = formEditAvatar["avatar"];
 profileEditButton.addEventListener("click", () => {
   openModal(popupTypeEdit);
   clearValidation(formElementProfile, validationConfig);
+  fillUserData();
 });
 
 profileAddButton.addEventListener("click", () => {
@@ -68,6 +69,12 @@ popupList.forEach((item) => {
   });
 });
 
+//
+function fillUserData() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+}
+
 //открытие картинки
 function openImageClick(cardImage) {
   openModal(popupContent);
@@ -86,26 +93,19 @@ function profileFormSubmit(evt) {
     about: jobInput.value,
   })
     .then((nameInput) => {
-      profileTitle.textContent = nameInput.value;
-      profileDescription.textContent = jobInput.value;
+      profileTitle.textContent = nameInput.name;
+      profileDescription.textContent = jobInput.about;
+      closeModal(popupTypeEdit);
+    })
+    .catch((err) => {
+      console.log(err);
     })
     .finally(() => {
       renderLoading(false);
-      closeModal(popupTypeEdit);
     });
 }
 
 formElementProfile.addEventListener("submit", profileFormSubmit);
-
-getUserInfo()
-  .then((user) => {
-    profileTitle.textContent = user.name;
-    profileDescription.textContent = user.about;
-    profileImage.style = `background-image: url('${user.avatar}')`;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 //Добавление карточки
 function addNewCard(evt) {
@@ -118,20 +118,20 @@ function addNewCard(evt) {
     .then((result) => {
       result = createCard(addCard, deleteCard, likeCard, openImageClick);
       placesList.prepend(result);
+      closeModal(popupNewCard);
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
       renderLoading(false);
-      closeModal(popupNewCard);
     });
 }
 
 formElementNewPlace.addEventListener("submit", addNewCard);
 
 //Вывести карточки на страницу
-function renderCards() {
+function displayUserCard() {
   Promise.all([getUserInfo(), newInitialCards()]).then(([userData]) => {
     const userId = userData._id;
     for (let i = 0; i < newInitialCards.length; i++) {
@@ -141,12 +141,14 @@ function renderCards() {
         likeCard,
         openImageClick,
         userId
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
       placesList.append(result);
     }
   });
 }
-renderCards();
+displayUserCard();
 
 // Валидация форм
 const validationConfig = {
@@ -173,10 +175,13 @@ formEditAvatar.addEventListener("submit", function (evt) {
   сhangeAvatar(avatarInput.value)
     .then((userData) => {
       profileImage.style = `background-image: url('${userData.avatar}')`;
+      closeModal(popupAvatar);
+    })
+    .catch((err) => {
+      console.log(err);
     })
     .finally(() => {
       renderLoading(false);
-      closeModal(popupAvatar);
     });
 });
 
