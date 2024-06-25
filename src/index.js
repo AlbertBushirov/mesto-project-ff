@@ -132,21 +132,23 @@ formElementNewPlace.addEventListener("submit", addNewCard);
 
 //Вывести карточки на страницу
 function displayUserCard() {
-  Promise.all([getUserInfo(), newInitialCards()]).then(([userData]) => {
-    const userId = userData._id;
-    for (let i = 0; i < newInitialCards.length; i++) {
-      const result = createCard(
-        newInitialCards[i],
-        deleteCard,
-        likeCard,
-        openImageClick,
-        userId
-      ).catch((err) => {
-        console.log(err);
-      });
-      placesList.append(result);
+  Promise.all([getUserInfo(), newInitialCards()]).then(
+    ([userData, userClass]) => {
+      const userId = [userData._id, userClass._id];
+      for (let i = 0; i < newInitialCards.length; i++) {
+        const result = createCard(
+          newInitialCards[i],
+          deleteCard,
+          likeCard,
+          openImageClick,
+          userId
+        ).catch((err) => {
+          console.log(err);
+        });
+        placesList.append(result);
+      }
     }
-  });
+  );
 }
 displayUserCard();
 
