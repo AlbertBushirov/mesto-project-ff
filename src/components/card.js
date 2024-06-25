@@ -33,7 +33,7 @@ const cardTemplate = document.querySelector("#card-template").content;
 const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
 //Функция проверки лайка
-function cardLike(LikeHandler, userId, countLikes, evt) {
+function controlСardLike(LikeHandler, userId, countLikes, evt) {
   const cardLikeElement = cardElement.getElementsByTagName(
     "card__like-button_is-active"
   );
@@ -52,8 +52,6 @@ export function createCard(cardData, onDelete, onLike, openImage, userId) {
   const resetButton = cardElement.querySelector(".card__delete-button");
   const cardLike = cardElement.querySelector(".card__like-button");
   const cardImage = cardElement.querySelector(".card__image");
-
-  cardLike(LikeHandler, userId, cardData.owner._id);
 
   cardElement.querySelector(".card__title").textContent = cardData.name;
   cardImage.src = cardData.link;
@@ -87,7 +85,7 @@ export function deleteCard(cardElementId, cardElement) {
 
 //Лайк карточки
 export function likeCard(element) {
-  cardLike(LikeHandler, userId, counterLikes, countLikes, evt)
+  controlСardLike(LikeHandler, userId, counterLikes, evt)
     .then(element._id.classList.toggle("card__like-button_is-active"))
     .catch((err) => {
       console.log(err);
