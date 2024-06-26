@@ -84,6 +84,7 @@ function openImageClick(cardImage) {
   popapCaption.textContent = cardImage.name;
 }
 
+//Смена данных пользователя
 function profileFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true);
@@ -94,7 +95,7 @@ function profileFormSubmit(evt) {
   })
     .then((nameInput) => {
       profileTitle.textContent = nameInput.name;
-      profileDescription.textContent = jobInput.about;
+      profileDescription.textContent = nameInput.about;
       closeModal(popupTypeEdit);
     })
     .catch((err) => {
@@ -116,8 +117,10 @@ function addNewCard(evt) {
     link: linkCard.value,
   })
     .then((result) => {
-      result = createCard(addCard, deleteCard, likeCard, openImageClick);
-      placesList.prepend(result);
+      placesList.prepend(
+        createCard(result, deleteCard, likeCard, openImageClick)
+      );
+      formElementNewPlace.reset();
       closeModal(popupNewCard);
     })
     .catch((err) => {
@@ -132,23 +135,21 @@ formElementNewPlace.addEventListener("submit", addNewCard);
 
 //Вывести карточки на страницу
 function displayUserCard() {
-  Promise.all([getUserInfo(), newInitialCards()]).then(
-    ([userData, userClass]) => {
-      const userId = [userData._id, userClass._id];
-      for (let i = 0; i < newInitialCards.length; i++) {
-        const result = createCard(
-          newInitialCards[i],
-          deleteCard,
-          likeCard,
-          openImageClick,
-          userId
-        ).catch((err) => {
-          console.log(err);
-        });
-        placesList.append(result);
-      }
-    }
-  );
+  Promise.all([getUserInfo(), newInitialCards()])
+    .then(([user, cards]) => {
+      profileTitle.textContent = user.name;
+      profileDescription.textContent = user.about;
+      profileImage.style = `background-image: url('${user.avatar}')`;
+      const userId = userData._id;
+      cards.forEach((card) => {
+        placesList.append(
+          createCard(card, deleteCard, likeCard, openImageClick, userId)
+        );
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 displayUserCard();
 
