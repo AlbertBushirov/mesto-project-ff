@@ -49,11 +49,11 @@ export function createCard(cardData, onDelete, likeCard, openImage, userId) {
   if (cardData.owner._id !== userId) {
     resetButton.disabled = true;
     resetButton.classList.add("visually-hidden");
+  } else {
+    resetButton.addEventListener("click", () => {
+      deleteCard(cardData._id, cardElement);
+    });
   }
-
-  resetButton.addEventListener("click", () => {
-    deleteCard(cardData._id, cardElement);
-  });
 
   cardLikeButton.addEventListener("click", (evt) => {
     handleLikeButton(evt, cardLikeButton, cardData, cardLikeCounter);
