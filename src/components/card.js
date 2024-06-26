@@ -29,7 +29,7 @@ function handleLikeButton(evt, cardLikeButton, cardData, cardLikeCounter) {
 }
 
 // @todo: Функция создания карточки
-export function createCard(cardData, onDelete, likeCard, openImage, userId) {
+export function createCard(cardData, deleteCard, likeCard, openImage, userId) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const resetButton = cardElement.querySelector(".card__delete-button");
