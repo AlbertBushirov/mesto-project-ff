@@ -136,7 +136,7 @@ formElementNewPlace.addEventListener("submit", addNewCard);
 //Вывести карточки на страницу
 function displayUserCard() {
   Promise.all([getUserInfo(), newInitialCards()])
-    .then(([user, cards]) => {
+    .then(([user, userData, cards]) => {
       profileTitle.textContent = user.name;
       profileDescription.textContent = user.about;
       profileImage.style = `background-image: url('${user.avatar}')`;
