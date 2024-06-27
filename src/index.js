@@ -96,6 +96,7 @@ function profileFormSubmit(evt) {
     .then((nameInput) => {
       profileTitle.textContent = nameInput.name;
       profileDescription.textContent = nameInput.about;
+      renderLoading(false);
       closeModal(popupTypeEdit);
     })
     .catch((err) => {
@@ -128,6 +129,7 @@ function addNewCard(evt) {
         )
       );
       formElementNewPlace.reset();
+      renderLoading(false);
       closeModal(popupNewCard);
     })
     .catch((err) => {
@@ -192,6 +194,7 @@ formEditAvatar.addEventListener("submit", function (evt) {
   сhangeAvatar(avatarInput.value)
     .then((userData) => {
       profileImage.style = `background-image: url('${userData.avatar}')`;
+      renderLoading(false);
       closeModal(popupAvatar);
     })
     .catch((err) => {
