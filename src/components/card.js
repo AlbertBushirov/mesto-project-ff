@@ -37,15 +37,6 @@ export function createCard(cardData, deleteCard, likeCard, openImage, userId) {
   const cardImage = cardElement.querySelector(".card__image");
   const cardLikeCounter = cardElement.querySelector(".card_like-counter");
 
-  cardElement.querySelector(".card__title").textContent = cardData.name;
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-  cardLikeCounter.textContent = cardData.likes.length;
-
-  if (cardData.likes.some((user) => user._id === userId)) {
-    cardLikeButton.classList.add("card__like-button_is-active");
-  }
-
   if (cardData.owner._id !== userId) {
     resetButton.disabled = true;
     resetButton.classList.add("visually-hidden");
@@ -53,6 +44,15 @@ export function createCard(cardData, deleteCard, likeCard, openImage, userId) {
     resetButton.addEventListener("click", () => {
       deleteCard(cardData._id, cardElement);
     });
+  }
+
+  cardElement.querySelector(".card__title").textContent = cardData.name;
+  cardImage.src = cardData.link;
+  cardImage.alt = cardData.name;
+  cardLikeCounter.textContent = cardData.likes.length;
+
+  if (cardData.likes.some((user) => user._id === userId)) {
+    cardLikeButton.classList.add("card__like-button_is-active");
   }
 
   cardLikeButton.addEventListener("click", (evt) => {

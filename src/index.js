@@ -134,12 +134,19 @@ function addNewCard(evt) {
 formElementNewPlace.addEventListener("submit", addNewCard);
 
 //Вывести карточки на страницу
+getUserInfo()
+  .then((user) => {
+    profileTitle.textContent = user.name;
+    profileDescription.textContent = user.about;
+    profileImage.style = `background-image: url('${user.avatar}')`;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 function displayUserCard() {
   Promise.all([getUserInfo(), newInitialCards()])
-    .then(([user, userData, cards]) => {
-      profileTitle.textContent = user.name;
-      profileDescription.textContent = user.about;
-      profileImage.style = `background-image: url('${user.avatar}')`;
+    .then(([userData, cards]) => {
       const userId = userData._id;
       cards.forEach((card) => {
         placesList.append(
