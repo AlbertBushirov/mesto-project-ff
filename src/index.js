@@ -111,6 +111,7 @@ formElementProfile.addEventListener("submit", profileFormSubmit);
 //Добавление карточки
 function addNewCard(evt) {
   evt.preventDefault();
+  renderLoading(true);
 
   addCard({
     name: placeNameCard.value,
@@ -118,7 +119,13 @@ function addNewCard(evt) {
   })
     .then((result) => {
       placesList.prepend(
-        createCard(result, deleteCard, likeCard, openImageClick)
+        createCard(
+          result,
+          deleteCard,
+          likeCard,
+          openImageClick,
+          result.owner._id
+        )
       );
       formElementNewPlace.reset();
       closeModal(popupNewCard);
