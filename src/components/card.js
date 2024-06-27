@@ -40,10 +40,6 @@ export function createCard(cardData, deleteCard, likeCard, openImage, userId) {
   if (cardData.owner._id !== userId) {
     resetButton.disabled = true;
     resetButton.classList.add("visually-hidden");
-  } else {
-    resetButton.addEventListener("click", () => {
-      deleteCard(cardData._id, cardElement);
-    });
   }
 
   cardElement.querySelector(".card__title").textContent = cardData.name;
@@ -57,6 +53,10 @@ export function createCard(cardData, deleteCard, likeCard, openImage, userId) {
 
   cardLikeButton.addEventListener("click", (evt) => {
     handleLikeButton(evt, cardLikeButton, cardData, cardLikeCounter);
+  });
+
+  resetButton.addEventListener("click", () => {
+    deleteCard(cardData._id, cardElement);
   });
 
   cardImage.addEventListener("click", () => {
